@@ -1,6 +1,14 @@
 var fs = require('fs');
-fs.readFile('./01-read-file/text.txt', function (err, logData) {
-  if (err) throw err;
-  let text = logData.toString();
-  console.log(`${text}`);
+
+var stream = new fs.ReadStream(__dirname + '/text.txt');
+var string = '';
+var part = '';
+
+stream.on('data',function(data){
+  string += data.toString();
 });
+
+stream.on('end',function(){
+  console.log(string);
+});
+
